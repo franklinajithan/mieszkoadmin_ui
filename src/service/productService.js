@@ -7,3 +7,5 @@ const axiosBase = axios.create({
 })
 export const productList = () => axiosInstance.get(`/product/productlist`);
 
+export const uploadBarcodeImage = (fileName,formData) => axiosInstance.post(`/product/uploadBarcodeImage/`+fileName,formData);
+

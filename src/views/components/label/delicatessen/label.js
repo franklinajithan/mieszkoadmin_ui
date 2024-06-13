@@ -121,7 +121,7 @@ export default function delicatessen() {
                                            {(obj[1].toString().length != 0 ) && <img style={{ marginTop: '7px', width: '60px', marginLeft: '3px', marginBottom: '-14px' }} src={logo} /> } 
                                         </div>
                                        
-                                        {(obj[1].toString().length != 0 ) &&<> {(obj[1].toString().length <= 35) && <div className="col-md-10" style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '20px', height: '52px' }}>
+                                        {((obj[1].toString().length != 0 ) && (obj[1].toString().length <= 35)) && <div className="col-md-10" style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '20px', height: '52px' }}>
                                             {obj[1]}
                                         </div>}
                                         {((obj[1].toString().length > 35) && (obj[1].toString().length < 45)) &&  <div className="col-md-10" style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '18px', height: '52px' }}>
@@ -129,7 +129,7 @@ export default function delicatessen() {
                                         </div>}
                                         {(obj[1].toString().length > 45) && <div className="col-md-10" style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '16px', height: '52px' }}>
                                             {obj[1]}
-                                        </div>}</>}
+                                        </div>}
 
 
                                     </div>

@@ -158,19 +158,19 @@ export default function StoreUpload() {
       </>
     ),
     //optionally customize modal content
-    renderEditRowDialogContent: ({ table, row, internalEditComponents }) => (
-      <>
-        <DialogTitle variant="h3">Edit User</DialogTitle>
-        <DialogContent
-          sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
-        >
-          {internalEditComponents} {/* or render custom edit components here */}
-        </DialogContent>
-        <DialogActions>
-          <MRT_EditActionButtons variant="text" table={table} row={row} />
-        </DialogActions>
-      </>
-    ),
+    // renderEditRowDialogContent: ({ table, row, internalEditComponents }) => (
+    //   <>
+    //     <DialogTitle variant="h3">Edit User</DialogTitle>
+    //     <DialogContent
+    //       sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
+    //     >
+    //       {internalEditComponents} {/* or render custom edit components here */}
+    //     </DialogContent>
+    //     <DialogActions>
+    //       <MRT_EditActionButtons variant="text" table={table} row={row} />
+    //     </DialogActions>
+    //   </>
+    // ),
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <Tooltip title="Edit">

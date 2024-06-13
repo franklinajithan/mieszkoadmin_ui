@@ -117,7 +117,11 @@ const _nav = [
         name: 'Promotion Label',
         to: '/label/promotion',
       },
-
+      {
+        component: CNavItem,
+        name: 'Bakery Label',
+        to: '/label/bakery',
+      },
     ],
   },
 

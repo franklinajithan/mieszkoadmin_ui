@@ -1,18 +1,162 @@
 
 import React, { useEffect, useState } from 'react'
-import { OutTable, ExcelRenderer } from 'react-excel-renderer';
+import { ExcelRenderer } from 'react-excel-renderer';
 import Barcode from 'react-barcode';
+import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import logo from 'src/assets/images/lg_log.png'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import EditIcon from '@mui/icons-material/Edit';
+import { uploadBarcodeImage } from '../../../../service/productService';
+import CIcon from '@coreui/icons-react'
+import 'react-tabs/style/react-tabs.css';
+import { useMemo } from 'react';
+import { useRef } from 'react';
 import circle from 'src/assets/images/yellow-circle.png'
-export default function promotion() {
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import {
+    cilCloudUpload
+} from '@coreui/icons'
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
+import { ImageURL } from '../../../../_config';
+import axios from 'axios'
 
-    const [col, setCol] = useState([]);
+
+
+
+
+export default function promotion() {
+    const [dataItem, setData] = useState([]);
+    const [selectedValue, setSelectedValue] = useState([]);
     const [row, setRow] = useState([]);
+    const [showTable, setShowTable] = useState(true);
+    const [file, setFile] = useState([]);
+    const [fileName, setFileName] = useState([]);
+
+    const [barcodeShow, setBarcodeShow] = useState(false);
     const [buttonSpinner, setButtonSpinner] = useState(false);
+    const fileInput = useRef()
+
+    const baseURL = "http://localhost:8800/image/"
 
     // const logo = require('../../assets/images/logo.png');
     // const circle = require('../../assets/images/yellow-circle.png');
 
+    const columns = useMemo(
+        () => [
+            // {
+            //     accessorKey: 'id',
+            //     header: 'Upload Image',
+            //     size: 10,
+            //     Cell: ({cell  }) => (
+            //         <Box
+            //             sx={{
+            //                 display: 'flex',
+            //                 alignItems: 'center',
+            //                 gap: '1rem',
+            //             }}
+            //         >
+
+            //             <label htmlFor="files" className="btn"><CIcon icon={cilCloudUpload} /></label>
+            //             <input id="files" type="file" ref={fileInput} style={{ visibility: "hidden" }} className='form-control' onChange={(e) => uploadImage(cell.getValue())} />
+
+
+            //         </Box>
+            //     ),
+
+            // },
+            {
+                accessorKey: 'imageURL',
+                header: 'Image',
+                size: 10,
+                Cell: ({ renderedCellValue, row }) => (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                        }}
+                    >
+
+
+                        <img
+                            alt="avatar"
+                            width={100}
+                            height={100}
+                            src={baseURL + renderedCellValue + ".webp"}
+                            loading="lazy"
+                            style={{ borderRadius: '50%' }}
+                        />
+
+                    </Box>
+                ),
+
+            },
+            {
+                accessorKey: '0',
+                header: 'Barcode',
+                size: 50,
+            },
+            {
+                accessorKey: '1',
+                header: 'Band',
+                size: 50,
+            },
+            {
+                accessorKey: '2',
+                header: 'Each',
+                size: 30,
+            },
+            {
+                accessorKey: '3',
+                header: 'Weight',
+                size: 30,
+            },
+            {
+                accessorKey: '4',
+                header: 'Product Name',
+                size: 30,
+            },
+            {
+                accessorKey: '5',
+                header: 'Price',
+                size: 30,
+            },
+            {
+                accessorKey: '6',
+                header: 'Image',
+                size: 30,
+            },
+            {
+                accessorKey: '7',
+                header: 'Promotion Date',
+                size: 30,
+            },
+
+
+        ]
+    );
+
+    const uploadImage = async (event) => {
+        debugger
+        let fileObj = event.target.files[0];
+        let value = selectedValue;
+        setShowTable(false)
+        const formData = new FormData();
+        //formData.append("file", event.target.files[0]);
+        formData.append("fileName", CellValue);
+        const result = await uploadBarcodeImage(renderedCellValue, formData);
+        debugger
+        if (result) {
+            setShowTable(true)
+            setData(dataItem)
+
+        } else {
+            setShowTable(true)
+            setData(dataItem)
+        }
+
+
+    }
 
 
     const fileHandler = (event) => {
@@ -24,37 +168,102 @@ export default function promotion() {
                 console.log(err);
             }
             else {
-                setCol(resp.cols);
+                //setCol(resp.cols);
+                resp.rows.forEach(element => { element.id = element[0], element.imageURL = element[0] });
                 let data = resp.rows.filter(x => x.length != 0);
+                setData(data)
                 setRow(data);
-                // setRow(data.slice(0, 101));
+
 
             }
         });
     }
 
-    // const imageUpload = (event) => {
+    const table = useMaterialReactTable({
+        columns,
+        data: row,
+        enablePagination: true,
+        enableBottomToolbar: true,
+        enableColumnFilterModes: true,
+        enableColumnOrdering: true,
+        enableGrouping: true,
+        enableColumnPinning: true,
+        enableFacetedValues: true,
+        enableRowActions: true,
+        enableFullScreenToggle: true,
 
-    //     let fileObj = event.target.files[0];
+        initialState: {
+            positionActionsColumn: 'first',
+            showGlobalFilter: true,
+            pagination: { pageSize: 10 },
+            density: 'compact',
+            // showColumnFilters: true,
+            columnPinning: {
+                left: ['mrt-row-actions'],
+                //right: ['mrt-row-actions'],
+            },
+        },
+        // paginationDisplayMode: 'pages',
+        // positionToolbarAlertBanner: 'bottom',
+        // muiSearchTextFieldProps: {
+        //     size: 'small',
+        //     variant: 'outlined',
+        // },
+        // muiTablePaperProps: {
+        //     elevation: 0,
+        //     sx: {
+        //         borderRadius: '0',
+        //     },
+        // },
+
+        // muiPaginationProps: {
+        //     color: 'secondary',
+        //     rowsPerPageOptions: [10, 20, 30],
+        //     shape: 'rounded',
+        //     variant: 'outlined',
+        // },
+        // createDisplayMode: 'modal',
+        // editDisplayMode: 'modal',
+        // enableEditing: true,
+        getRowId: (row) => row.id,
 
 
-    // }
 
-    const imageUpload = (event) => {
-        // console.log(event.target);
-        // console.log(files.target);
-        // fs.writeFile(`../assets/images/testimonialImage/${files.target.files[0].name}.png`, files.target.files[0], function (err) {
-        //     if (err) throw err;
-        //     console.log('Replaced!');
-        // });
-    }
+        renderRowActions: ({ row, table }) => (
+
+            // <div> <label htmlFor="files" className="btn"><CIcon icon={cilCloudUpload} /></label>
+            //     <input id="files" type="file" style={{ visibility: "hidden" }} className='form-control' onClick={() => setSelectedValue(row)} onChange={(e) => uploadImage(e)} />
+            // </div>
+
+            <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <>
+                    <input
+                        style={{
+                            display: "none"
+                        }}
+                       // specify the file type that you wanted to accept
+                        id="choose-file"
+                        type="file"
+                        onChange={uploadImage}
+                    />
+                    <label htmlFor="choose-file">
+                        <IconButton aria-label="upload">
+                            <CloudUploadIcon />
+                        </IconButton>
+                    </label>
+                </>
+            </Box>
 
 
-    const printiframe = () => {
 
-        window.frames["theFrame"].focus();
-        window.frames["theFrame"].print();
-    }
+
+
+        ),
+
+
+    });
+
+
 
 
     const PrintDiv = (id) => {
@@ -97,6 +306,7 @@ export default function promotion() {
             <div>
 
                 {row.map(function (obj, index) {
+
                     // if (index != 0) {
                     if (obj[0] == undefined) {
                         obj[0] = ''
@@ -118,23 +328,7 @@ export default function promotion() {
                         obj[7] = ''
                     }
 
-
-                    let image;
-                    // if (obj[5] != undefined) {
-                    //     try {
-                    //         image = require(`../../assets/iMAGE/${obj[5]}`);
-                    //         if (image == undefined) {
-                    //             image = require(`../../assets/iMAGE/noavailable.webp`)
-                    //         }
-                    //     } catch (error) {
-
-                    //     }
-
-
-                    // }
-
-
-
+                    const image = new URL(baseURL + `${obj[6]}`, import.meta.url).href
 
 
                     return (
@@ -158,7 +352,10 @@ export default function promotion() {
                                                 <div style={{ border: '5px solid #c23b32', backgroundColor: '#c23b32', marginTop: '10px', borderRadius: '25px' }}>
                                                     <div style={{ textAlign: 'center', fontSize: '49px', fontWeight: 'bold', color: 'white' }} >Promotional Period</div>
 
-                                                    <div style={{ textAlign: 'center', marginTop: '-3px', fontSize: '32px', fontWeight: 'bold', color: 'white' }} > {obj[7]}</div>
+
+                                                    {((obj[7].toString().length != 0) && (obj[7].toString().length <= 30)) && <div style={{ textAlign: 'center', marginTop: '-3px', fontSize: '32px', fontWeight: 'bold', color: 'white' }} > {obj[7]}</div>}
+                                                    {(obj[7].toString().length > 30) && <div style={{ textAlign: 'center', marginTop: '-3px', fontSize: '28px', fontWeight: 'bold', color: 'white' }} > {obj[7]}</div>}
+
                                                 </div>
                                             </div>
 
@@ -175,6 +372,7 @@ export default function promotion() {
 
                                             <div style={{ height: '545px', width: '640px', marginLeft: '10px' }}>
                                                 < img style={{ height: '100%', width: '100%', objectFit: 'contain' }} src={image} />
+
                                             </div>
 
                                             {/* <div className='row'>
@@ -192,12 +390,12 @@ export default function promotion() {
                                                 <img className='image-shadow' style={{ position: 'relative', marginLeft: '58px', marginTop: '-26px', width: 'auto', height: 'auto', maxHeight: '87%', maxWidth: '96%' }} src={circle} />
 
 
-                                                {!(obj[4]).toString().toLowerCase().includes("for") &&
+                                                {!(obj[5]).toString().toLowerCase().includes("for") &&
 
                                                     <>
                                                         <div>
                                                             <span style={{ position: 'absolute', color: 'black', fontSize: '74px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-350px', marginLeft: '180px' }}>£</span>
-                                                            <span style={{ position: 'absolute', color: 'black', fontSize: '118px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-309px', marginLeft: '231px' }}><span>{Number(obj[4]).toFixed(2)}</span></span>
+                                                            <span style={{ position: 'absolute', color: 'black', fontSize: '118px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-309px', marginLeft: '231px' }}><span>{Number(obj[5]).toFixed(2)}</span></span>
 
                                                         </div>
                                                         <div className="container" style={{ marginTop: '100px' }}>
@@ -206,7 +404,7 @@ export default function promotion() {
                                                     </>
                                                 }
 
-                                                {(obj[4]).toString().toLowerCase().includes("for") &&
+                                                {(obj[5]).toString().toLowerCase().includes("for") &&
 
                                                     <>
                                                         <div style={{ position: 'absolute', color: 'black' }}>
@@ -214,7 +412,7 @@ export default function promotion() {
                                                                 <div style={{ fontSize: '70px', marginTop: '-117px', marginLeft: '288px', fontWeight: 'bold', textAlign: 'center' }}>FOR</div>
                                                                 <div style={{ fontSize: '88px', marginTop: '-23px', marginLeft: '182px', fontWeight: 'bold', textAlign: 'center' }}>{(obj[4].split(' '))[2]}</div> */}
 
-                                                            <div style={{ fontSize: '61px', marginTop: '-313px', marginLeft: '135px', fontWeight: 'bold', textAlign: 'center' }}>{obj[4]}</div>
+                                                            <div style={{ fontSize: '55px', marginTop: '-288px', marginLeft: '163px', fontWeight: 'bold', textAlign: 'center' }}>{obj[5]}</div>
 
                                                         </div>
                                                         <div className="container" style={{ marginTop: '50px' }}>
@@ -224,11 +422,11 @@ export default function promotion() {
                                                 }
 
 
-                                                {!(obj[4]).toString().toLowerCase().includes("for") &&
+                                                {!(obj[5]).toString().toLowerCase().includes("for") &&
                                                     <div style={{ position: 'relative', marginTop: '-250px', color: 'white', fontSize: '46px', fontWeight: 'bold', marginLeft: '48%' }}>{obj[2]}</div>
                                                 }
-                                                {(obj[4]).toString().toLowerCase().includes("for") &&
-                                                    <div style={{ position: 'relative', marginTop: '-250px', color: 'white', fontSize: '46px', fontWeight: 'bold', marginLeft: '48%' }}>{obj[2]}</div>
+                                                {(obj[5]).toString().toLowerCase().includes("for") &&
+                                                    <div style={{ position: 'relative', marginTop: '-250px', color: 'white', fontSize: '46px', fontWeight: 'bold', marginLeft: '48%' }}></div>
                                                 }
 
 
@@ -255,9 +453,9 @@ export default function promotion() {
 
                                             <div id="flex">
 
-                                                {/* <div style={{ float: 'left' }}>
-                                                    <Barcode marginTop={0} float={'left'} marginLeft={0} marginBottom={0} marginRight={0} fontSize={25} value={obj[0].toString()} format="CODE128" width={25} height={55} />
-                                                </div> */}
+                                                {barcodeShow && <div style={{ float: 'left' }}>
+                                                    <Barcode marginTop={0} float={'left'} marginLeft={0} marginBottom={0} marginRight={0} fontSize={20} value={obj[0].toString()} format="CODE128" width={2} height={40} />
+                                                </div>}
                                             </div>
 
 
@@ -267,9 +465,17 @@ export default function promotion() {
 
                                             <div id="flex" style={{ marginTop: '0px' }}>
 
-                                                <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '42px' }}>{obj[3]}</div>
+
+
+                                                {((obj[4].toString().length != 0) && (obj[4].toString().length <= 33)) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '42px' }}>{obj[4]}</div>}
+                                                {((obj[4].toString().length > 33) && (obj[4].toString().length < 42)) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '35px' }}>{obj[4]}</div>}
+                                                {(obj[4].toString().length > 42) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '30px' }}>{obj[4]}</div>}
+
+
+
+
                                                 {/* <div id="a" style={{ marginLeft: 'auto', marginRight: '0', color: '#rgb(139 54 49)', position: 'relative', float: 'right', right: '-20px', marginTop: '40px', fontSize: '42px', fontWeight: 'bold', whiteSpace: 'nowrap', fontFamily: 'system-ui', }}>{obj[3]}</div> */}
-                                                <div id="b" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', textAlign: 'right', marginTop: '8px', fontSize: '31px', }}>{obj[6]} / {obj[1]}</div>
+                                                <div id="b" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', textAlign: 'right', marginTop: '8px', fontSize: '31px', }}>{obj[3]} {obj[3] != '' && "/"} {obj[1]}</div>
 
                                             </div>
                                             {/* <div className="flex">
@@ -372,7 +578,7 @@ export default function promotion() {
                             <div className="col-2"><strong>Image</strong></div>
                             <div className="col-2"><strong>Promotion Date</strong></div>
                         </div>
-             		
+
 
                         <div className="row mb-4 border m-0">
                             <div className="col-2">5900344016666</div>
@@ -386,22 +592,61 @@ export default function promotion() {
                         </div>
                     </div>
 
+
+
                     <div className='row'>
                         <div className="row mb-m-0">
                             <strong className='mb-2'>Excel Upload</strong>
 
                         </div>
-                        <div className='col-md-4'><input type="file" className='form-control' onChange={(e) => fileHandler(e)} /></div>
-                        <div className='col-md-2'><button type='button' className='btn btn-primary col-8' onClick={PrintDiv} >
-                            {buttonSpinner && <CSpinner as="span" size="sm" variant="grow" aria-hidden="true" >
-                                Loading...</CSpinner>} Print
-                        </button></div>
-                        {/* <div className='col-md-2'>  <button type='button' className="btn btn-primary col-8" onClick={printiframe}>Print
-            </button></div> */}
-                    </div>
-                    <iframe className="mb-3 mt-3" id="theFrame" name="theFrame"></iframe>
 
-                    <div className="mb-3 mt-3" id='textcanves'> <MyDocument></MyDocument></div>
+
+                    </div>
+
+
+                    <div className='row'>
+                        <Tabs>
+                            <TabList>
+                                <Tab>Excel Upload</Tab>
+                                <Tab>Image Upload</Tab>
+                            </TabList>
+
+                            <TabPanel>
+                                <div className='row'>
+                                    <div className='col-md-4'><input type="file" className='form-control' onChange={(e) => fileHandler(e)} /></div>
+                                    <div className='col-md-2'><button type='button' className='btn btn-primary col-8' onClick={PrintDiv} >
+                                        {buttonSpinner && <CSpinner as="span" size="sm" variant="grow" aria-hidden="true" >
+                                            Loading...</CSpinner>} Print
+                                    </button></div>
+
+                                </div>
+
+                                <iframe className="mb-3 mt-3" id="theFrame" name="theFrame"></iframe>
+
+                                <div className="mb-3 mt-3" id='textcanves'> <MyDocument></MyDocument></div>
+                            </TabPanel>
+                            <TabPanel>
+                                <div className='row'>
+                                    <div className='col-md-4'><input type="file" className='form-control' onChange={(e) => fileHandler(e)} /></div>
+
+
+                                    {/* <div className='col-md-2'><button type='button' className='btn btn-primary col-8' onClick={PrintDiv} >
+                                    {buttonSpinner && <CSpinner as="span" size="sm" variant="grow" aria-hidden="true" >
+                                        Loading...</CSpinner>} Print
+                                </button></div> */}
+
+
+                                    {showTable && <MaterialReactTable table={table} />}
+
+                                </div>
+                            </TabPanel>
+                        </Tabs>
+
+
+                    </div>
+
+
+
 
 
                 </div>

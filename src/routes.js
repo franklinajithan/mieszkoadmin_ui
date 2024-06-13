@@ -51,6 +51,7 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 // const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const Delicatessen = React.lazy(() => import('./views/components/label/delicatessen/label'));
 const Promotion = React.lazy(() => import('./views/components/label/promotion/label'));
+const Bakery = React.lazy(() => import('./views/components/label/bakery/label'));
 const ProductList = React.lazy(() => import('./views/components/product/ProductList/ProductList'));
 const productupload = React.lazy(() => import('./views/components/product/ProductUpload/ProductUpload'));
 const storelist = React.lazy(() => import('./views/components/store/StoreList/StoreList'));
@@ -60,6 +61,7 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/label/delicatessen', name: 'Delicatessen Label', element: Delicatessen },
   { path: '/label/promotion', name: 'Promotion Label', element: Promotion },
+  { path: '/label/bakery', name: 'Bakery Label', element: Bakery },
   { path: '/product/productlist', name: 'Product List', element: ProductList },
   { path: '/product/productupload', name: 'Product Upload', element: productupload },
   { path: 'store/storelist', name: 'Store List', element: storelist },

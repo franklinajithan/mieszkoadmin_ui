@@ -79,7 +79,12 @@ export default function ProductUpload() {
 
     e.preventDefault();
     try {
-      const result = await uploadPriceList(selectedStote,row);
+
+      const formData = new FormData();
+      formData.append("file",  JSON.stringify(row));
+
+      formData.append("selectedStote", selectedStote);
+      const result = await uploadPriceList(formData);
 
     } catch (error) {
 
@@ -112,7 +117,7 @@ export default function ProductUpload() {
                 id="store"
                 className="form-select"
               //   {...register('parentEntity')}
-              onChange={(e) =>  {debugger; return  setSelectedStote(e.currentTarget.value);} } 
+              onChange={(e) => setSelectedStote(e.currentTarget.value)} 
               >
                 <option key={0} value="">Select</option>
 

@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
+
 const ProductGrid = () => {
   // const [validationErrors, setValidationErrors] = useState({});
 
@@ -140,13 +141,13 @@ const ProductGrid = () => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'ItemID',
+        accessorKey: 'item_id',
         header: 'Id',
         //  enableEditing: false,
           size: 30,
       },
       {
-        accessorKey: 'ItemName',
+        accessorKey: 'product_name',
         header: 'Product Name',
         size: 50,
         //  muiEditTextFieldProps: {
@@ -163,7 +164,7 @@ const ProductGrid = () => {
       },
       //  },
       {
-        accessorKey: 'Brand',
+        accessorKey: 'brand',
         header: 'Brand',
         size: 30,
         //muiEditTextFieldProps: {
@@ -179,7 +180,7 @@ const ProductGrid = () => {
       },
       //  },
       {
-        accessorKey: 'Size',
+        accessorKey: 'size',
         header: 'Size',
         size: 30,
         //   muiEditTextFieldProps: {
@@ -196,7 +197,7 @@ const ProductGrid = () => {
         //   },
       },
       {
-        accessorKey: 'SupplierID',
+        accessorKey: 'supplier_id',
         header: 'SupplierID',
         size: 30,
         // editVariant: 'select',
@@ -208,7 +209,7 @@ const ProductGrid = () => {
         // },
       },
       {
-        accessorKey: 'UOM',
+        accessorKey: 'uom',
         header: 'UOM',
         size: 30,
         // editVariant: 'select',
