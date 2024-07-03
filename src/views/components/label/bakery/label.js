@@ -114,7 +114,7 @@ export default function bakery() {
                                     <div className="row" style={{ paddingTop: '9px', paddingBottom: '9px' }}>
                                         <div className="col-md-6" style={{ paddingLeft: '15px', paddingTop: '2px' }}>
                                             <div className='bg-colour-yellow' style={{ paddingLeft: '10px', position: 'relative', height: '100px', width: '170px', border: '4px solid #c23b32', padding: '0 0' }}>
-                                                <div style={{ fontSize: '46px', fontWeight: 'bold' }}>£  {object[2]}</div>
+                                                <div style={{ fontSize: '46px', fontWeight: 'bold' }}>£  {Number(object[2]).toFixed(2)}</div>
                                                 <div style={{ fontSize: '20px', fontWeight: 'bold', float: 'right', marginRight: '2px', marginTop: '-6px' }}>&nbsp;{object[3]}</div>
 
                                             </div>
