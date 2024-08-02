@@ -32,7 +32,7 @@ export default function promotion() {
     const [file, setFile] = useState([]);
     const [fileName, setFileName] = useState([]);
 
-    const [barcodeShow, setBarcodeShow] = useState(false);
+    const [barcodeShow, setBarcodeShow] = useState(true);
     const [buttonSpinner, setButtonSpinner] = useState(false);
     const fileInput = useRef()
 
@@ -350,7 +350,7 @@ export default function promotion() {
                                         <div className="col-md-5 p-0">
                                             <div style={{ marginLeft: '-50px', marginRight: '41px' }}>
                                                 <div style={{ border: '5px solid #c23b32', backgroundColor: '#c23b32', marginTop: '10px', borderRadius: '25px' }}>
-                                                    <div style={{ textAlign: 'center', fontSize: '49px', fontWeight: 'bold', color: 'white' }} >Promotional Period</div>
+                                                    <div style={{ textAlign: 'center', fontSize: '49px', fontWeight: 'bold', color: 'white' }} > Promotional Period</div>
 
 
                                                     {((obj[7].toString().length != 0) && (obj[7].toString().length <= 30)) && <div style={{ textAlign: 'center', marginTop: '-3px', fontSize: '32px', fontWeight: 'bold', color: 'white' }} > {obj[7]}</div>}
@@ -412,7 +412,7 @@ export default function promotion() {
                                                                 <div style={{ fontSize: '70px', marginTop: '-117px', marginLeft: '288px', fontWeight: 'bold', textAlign: 'center' }}>FOR</div>
                                                                 <div style={{ fontSize: '88px', marginTop: '-23px', marginLeft: '182px', fontWeight: 'bold', textAlign: 'center' }}>{(obj[4].split(' '))[2]}</div> */}
 
-                                                            <div style={{ fontSize: '55px', marginTop: '-288px', marginLeft: '163px', fontWeight: 'bold', textAlign: 'center' }}>{obj[5]}</div>
+                                                            <div style={{ fontSize: '51px', marginTop: '-288px', marginLeft: '163px', fontWeight: 'bold', textAlign: 'center' }}>{obj[5]}</div>
 
                                                         </div>
                                                         <div className="container" style={{ marginTop: '50px' }}>
