@@ -5,7 +5,6 @@ import Barcode from 'react-barcode';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import logo from 'src/assets/images/lg_log.png'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import EditIcon from '@mui/icons-material/Edit';
 import { uploadBarcodeImage } from '../../../../service/productService';
 import CIcon from '@coreui/icons-react'
 import 'react-tabs/style/react-tabs.css';
@@ -19,7 +18,9 @@ import {
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import { ImageURL } from '../../../../_config';
 import axios from 'axios'
-
+import { CModal } from '@coreui/react'
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
@@ -32,8 +33,11 @@ export default function promotion() {
     const [file, setFile] = useState([]);
     const [fileName, setFileName] = useState([]);
 
-    const [barcodeShow, setBarcodeShow] = useState(true);
+ 
+    const [editModalvisible, setEditModalvisible] = useState(false);
+    const [barcodeShow, setBarcodeShow] = useState(false);
     const [buttonSpinner, setButtonSpinner] = useState(false);
+    const  imageHash=  Date.now()
     const fileInput = useRef()
 
     const baseURL = "http://localhost:8800/image/"
@@ -82,7 +86,7 @@ export default function promotion() {
                             alt="avatar"
                             width={100}
                             height={100}
-                            src={baseURL + renderedCellValue + ".webp"}
+                            src={baseURL + renderedCellValue + ".webp?"+imageHash}
                             loading="lazy"
                             style={{ borderRadius: '50%' }}
                         />
@@ -136,16 +140,12 @@ export default function promotion() {
         ]
     );
 
-    const uploadImage = async (event) => {
-        debugger
-        let fileObj = event.target.files[0];
-        let value = selectedValue;
+    const uploadImage = async (value, event) => {
         setShowTable(false)
         const formData = new FormData();
-        //formData.append("file", event.target.files[0]);
-        formData.append("fileName", CellValue);
-        const result = await uploadBarcodeImage(renderedCellValue, formData);
-        debugger
+        formData.append("file", event.target.files[0]);
+        formData.append("fileName", value);
+        const result = await uploadBarcodeImage(value, formData);
         if (result) {
             setShowTable(true)
             setData(dataItem)
@@ -177,6 +177,11 @@ export default function promotion() {
 
             }
         });
+    }
+
+    function onClickEdit(row) {
+        setEditModalvisible(true);
+        // setSelectRow(row.original)
     }
 
     const table = useMaterialReactTable({
@@ -231,32 +236,15 @@ export default function promotion() {
 
         renderRowActions: ({ row, table }) => (
 
-            // <div> <label htmlFor="files" className="btn"><CIcon icon={cilCloudUpload} /></label>
-            //     <input id="files" type="file" style={{ visibility: "hidden" }} className='form-control' onClick={() => setSelectedValue(row)} onChange={(e) => uploadImage(e)} />
-            // </div>
+            <Box>
+           
+          
+            
+            {/* <label htmlFor="upload" className="btn btn-primary" tabIndex="0">Upload File</label> */}
+            <input type="file" className="form-control btn btn-primary" id="upload" onChange= {(event) =>uploadImage(row.original.id, event)} />
+            
 
-            <Box sx={{ display: 'flex', gap: '1rem' }}>
-                <>
-                    <input
-                        style={{
-                            display: "none"
-                        }}
-                       // specify the file type that you wanted to accept
-                        id="choose-file"
-                        type="file"
-                        onChange={uploadImage}
-                    />
-                    <label htmlFor="choose-file">
-                        <IconButton aria-label="upload">
-                            <CloudUploadIcon />
-                        </IconButton>
-                    </label>
-                </>
-            </Box>
-
-
-
-
+          </Box>
 
         ),
 
@@ -651,6 +639,7 @@ export default function promotion() {
 
                 </div>
             </div>
+
 
         </>
     )
