@@ -49,7 +49,12 @@ const _nav = [
         name: 'Product Upload',
         to: '/product/productupload',
       },
-
+      {
+        component: CNavItem,
+        icon: <CIcon icon={cilList} customClassName="nav-icon" />,
+        name: 'Product Stock',
+        to: '/product/productStock',
+      },
     ],
   },
 

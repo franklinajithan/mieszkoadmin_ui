@@ -53,9 +53,9 @@ const Delicatessen = React.lazy(() => import('./views/components/label/delicates
 const Promotion = React.lazy(() => import('./views/components/label/promotion/label'));
 const Bakery = React.lazy(() => import('./views/components/label/bakery/label'));
 const ProductList = React.lazy(() => import('./views/components/product/ProductList/ProductList'));
-const productupload = React.lazy(() => import('./views/components/product/ProductUpload/ProductUpload'));
-const storelist = React.lazy(() => import('./views/components/store/StoreList/StoreList'));
-
+const ProductUpload = React.lazy(() => import('./views/components/product/ProductUpload/ProductUpload'));
+const storeList = React.lazy(() => import('./views/components/store/StoreList/StoreList'));
+const ProductStock = React.lazy(() => import('./views/components/product/ProductStock/ProductStock'));
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -63,8 +63,9 @@ const routes = [
   { path: '/label/promotion', name: 'Promotion Label', element: Promotion },
   { path: '/label/bakery', name: 'Bakery Label', element: Bakery },
   { path: '/product/productlist', name: 'Product List', element: ProductList },
-  { path: '/product/productupload', name: 'Product Upload', element: productupload },
-  { path: 'store/storelist', name: 'Store List', element: storelist },
+  { path: '/product/productupload', name: 'Product Upload', element: ProductUpload },
+  { path: '/product/productStock', name: 'Product Stock', element: ProductStock },
+  { path: 'store/storelist', name: 'Store List', element: storeList },
   
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },

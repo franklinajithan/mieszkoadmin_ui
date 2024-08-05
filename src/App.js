@@ -11,6 +11,11 @@ import Handsontable from 'handsontable/base';
 import { registerAllModules } from 'handsontable/registry';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+
+
+import "react-datepicker/dist/react-datepicker.css";
+
+
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
