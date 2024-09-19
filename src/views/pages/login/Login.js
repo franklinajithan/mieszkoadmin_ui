@@ -67,27 +67,27 @@ const Login = () => {
       localStorage.setItem('refreshToken', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
       localStorage.setItem('tokenLifeInSeconds', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
       
-   //   let details = { username: data.username, password: data.password };
-   //   const result = await userLogin(details);
+    //  let details = { username: data.username, password: data.password };
+    //  const result = await userLogin(details);
 
-      // if (result.status === null || result.status !== 200) {
-      //   console.log(result.data);
+    //   if (result.status === null || result.status !== 200) {
+    //     console.log(result.data);
 
-      //   NotificationManager.error('An error occurred when logging in, please try again.', '', 2000);
-      //   return;
-      // }
+    //     NotificationManager.error('An error occurred when logging in, please try again.', '', 2000);
+    //     return;
+    //   }
 
-      // let jsonData = result.data;
-      // const userDetails = JSON.stringify(jsonData.result);
-      // localStorage.setItem('token', jsonData.token);
-      // localStorage.setItem('refreshToken', jsonData.refreshToken);
-      // localStorage.setItem('tokenLifeInSeconds', jsonData.tokenLifeInSeconds);
-      // //localStorage.setItem('userinfor', userDetails);
-      // let loginUser = { ...details, isLogin: true, keepMeSignIn: details.keepSignIn };
-      // // dispatch({
-      // //   type: USER_LOGIN,
-      // //   payload: loginUser,
-      // // });
+    //   let jsonData = result.data;
+    //   const userDetails = JSON.stringify(jsonData.result);
+    //   localStorage.setItem('token', jsonData.token);
+    //   localStorage.setItem('refreshToken', jsonData.refreshToken);
+    //   localStorage.setItem('tokenLifeInSeconds', jsonData.tokenLifeInSeconds);
+    //   //localStorage.setItem('userinfor', userDetails);
+    //   let loginUser = { ...details, isLogin: true, keepMeSignIn: details.keepSignIn };
+    //   // dispatch({
+    //   //   type: USER_LOGIN,
+    //   //   payload: loginUser,
+    //   // });
       navigate('/dashboard');
     } catch (e) {
       // console.log(e);

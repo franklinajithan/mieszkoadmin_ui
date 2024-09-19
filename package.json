@@ -39,6 +39,7 @@
     "@mui/x-date-pickers": "^7.4.0",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^2.2.5",
+    "ag-grid-react": "^32.0.2",
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
     "classnames": "^2.5.1",

@@ -11,7 +11,9 @@ import Handsontable from 'handsontable/base';
 import { registerAllModules } from 'handsontable/registry';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-
+import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
+import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
 
 import "react-datepicker/dist/react-datepicker.css";
 

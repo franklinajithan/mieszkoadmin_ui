@@ -17,31 +17,31 @@ import {
   getProductStock
 } from '../../../../service/productService';
 import { useForm } from 'react-hook-form';
-
+import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
 const schema = yup.object({
-    // StoreID: yup.string(),
-    // storename: yup.string().required('Please enter a name.'),
-    // location: yup.string().required('Please enter a location.'),
-    // address: yup.string().required('Please enter a address.'),
-    // postcode: yup.string().required('Please enter a postcode.'),
 
-    StoreID: yup.string(),
-    storename: yup.string(),
-    location: yup.string(),
-    address: yup.string(),
-    postcode: yup.string(),
+  productId: yup.string(),
+
 })
+
+
+const initialSearch = {
+}
+
+
+
+
+
+
+
 export default function ProductStock() {
-    const { register, setValue, getValues, handleSubmit, formState: { errors }, } = useForm({ resolver: yupResolver(schema), });
+  const { register, setValue, getValues, handleSubmit, formState: { errors }, } = useForm({ resolver: yupResolver(schema), });
 
 
-const storeList=[
+  const storeList = [
     { StoreID: 'Hounslow', StoreName: 'Hounslow' },
     { StoreID: 'SWINDON', StoreName: 'SWINDON' },
-   
-];
-
-
+  ];
 
 
   const [productStock, setProductStock] = useState([]);
@@ -51,11 +51,37 @@ const storeList=[
   const [row, setRow] = useState([]);
   const [selectedStote, setSelectedStote] = useState(null);
   const [store, setStore] = useState([]);
+  const [module, setSelectedModule] = useState([]);
+  const [barcodeList, setBarcodeList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(initialSearch)
+
+
+  const [rowData, setRowData] = useState([
+    // { make: "Tesla", model: "Model Y", price: 64950, electric: true },
+    // { make: "Ford", model: "F-Series", price: 33850, electric: false },
+    // { make: "Toyota", model: "Corolla", price: 29600, electric: false },
+  ]);
+
+  // Column Definitions: Defines the columns to be displayed.
+  const [colDefs, setColDefs] = useState([
+    { field: "ProdID" },
+    { field: "PrBaInnerBarcode" },
+    // { field: "AuditTrail" },
+    { field: "module" },
+    { field: "count" },
+    { field: "date" },
+    { field: "price" },
+  ]);
+
+
+
+
+
   useEffect(() => {
     setStore(storeList);
     const fetchData = async () => {
-        // const result = await getProductStock(store,barcode,module,startDate,endDate);
-        // setStore(result.data)
+      // const result = await getProductStock(store,barcode,module,startDate,endDate);
+      // setStore(result.data)
     };
     fetchData();
 
@@ -64,24 +90,121 @@ const storeList=[
 
 
 
-function onChangeStore(e){
-    const fetchData = async () => {
-       let store ="http://62.64.134.130:1500/api/Product/ProductAuditTrailData"
-       let productId
-       let barcode
-       let module
-       let startDate
-       let endDate
-       const result = await getProductStock(store,productId,barcode,module,startDate,endDate);
-       setProductStock(result.data)
-    };
-    fetchData();
+  function onChangeStore(st) {
 
-}
+    setSearchQuery({ ...initialSearch, store: st })
 
 
+  }
+
+  useEffect(() => {
+    let barcodeList = []
+    if (productStock.length != 0) {
+      productStock.Table.forEach(item => {
+        let barcodeavaibleCheck = barcodeList.filter(e => e.barcode == item.PrBaInnerBarcode).length
+        if (barcodeavaibleCheck == 0) {
+          barcodeList.push({ barcode: item.PrBaInnerBarcode });
+        }
+      });
+      setBarcodeList(barcodeList);
+      setRowData(productStock.Table);
+    }
 
 
+    // 
+  }, [productStock])
+
+  function onChangeBarcode(barcode) {
+
+
+    if (barcode == "") {
+      setRowData(productStock.Table);
+    } else {
+      let selectionList = productStock.Table.filter(e => e.PrBaInnerBarcode == barcode)
+      setRowData(selectionList);
+
+    }
+
+  }
+
+
+  useEffect(() => {
+debugger;
+    if (searchQuery.store != undefined && productId != '') {
+      try {
+        let storeIP = "";
+        if (searchQuery.store == "Gravesend") {
+          storeIP = "";
+        } else if (searchQuery.store == "Eastham") {
+          storeIP = "";
+        } else if (searchQuery.store == "Streatham") {
+          storeIP = "";
+        } else if (searchQuery.store == "Sudbury") {
+          storeIP = "";
+        } else if (searchQuery.store == "Perivale") {
+          storeIP = "";
+        } else if (searchQuery.store == "Hounslow") {
+          storeIP = "";
+        } else if (searchQuery.store == "Hayes") {
+          storeIP = "";
+        } else if (searchQuery.store == "Watfords") {
+          storeIP = "";
+        }
+
+
+
+        const fetchData = async () => {
+          let shop = store
+          let productId = 12921
+          let barcode
+          let moduleDropdown = module
+          let startDate
+          let endDate
+          const result = await getProductStock(storeIP, productId, barcode, moduleDropdown, startDate, endDate);
+
+          result.data.Table.forEach(element => {
+            let firstSplit = element.AuditTrail.split("<span style=\"font-weight:bold;\">");
+            let secondSplit = firstSplit[1]?.split(":")
+            let threeSplit = secondSplit[0]?.split("(")[0];
+            let fourSplit = secondSplit[4]?.split("<")[0];
+            let fiveSplit = secondSplit[1]?.split("</span>")[0];
+            let sixSplit = firstSplit[3]?.split("</span>")[0];
+            let sevenSplit = firstSplit[2]?.split("</span>")[0];
+            let eightSplit = firstSplit[4]?.split("</span>")[0];
+            let nineSplit = firstSplit[3]?.split("</span>")[0];
+            element.module = threeSplit?.trim();
+
+
+
+            if (element.module == "SALES") {
+
+              element.count = fourSplit?.trim();
+              element.date = sevenSplit;
+              element.price = nineSplit;
+            } else if (element.module == "Delivery") {
+              element.count = fiveSplit?.trim();
+              element.date = sixSplit;
+              element.price = eightSplit;
+
+            } else if (element.module == "Stock Take") {
+
+              element.count = fiveSplit?.trim();
+              element.date = sevenSplit;
+              element.price = sixSplit;
+            }
+
+          });
+          setProductStock(result.data)
+        };
+        fetchData();
+      } catch (error) {
+
+      }
+    }
+
+
+
+  }, [searchQuery])
 
 
 
@@ -89,7 +212,7 @@ function onChangeStore(e){
     <>
 
 
-<div className="card" style={{ height: '100%' }}>
+      <div className="card" style={{ height: '100%' }}>
         <div className='card-header'>
           <h4><strong>Product Stock</strong></h4>
 
@@ -107,16 +230,20 @@ function onChangeStore(e){
                 name="store"
                 id="store"
                 className="form-select"
-              //   {...register('parentEntity')}
-              onChange={(e) => onChangeStore(e.currentTarget.value)} 
+                //   {...register('parentEntity')}
+                onChange={(e) => onChangeStore(e.currentTarget.value)}
               >
-                <option key={0} value="">Select</option>
+                <option key={1} value="">Select</option>
+                <option key={2} value="Gravesend">Gravesend</option>
+                <option key={3} value="Eastham">Eastham</option>
+                <option key={4} value="Streatham">Streatham</option>
+                <option key={6} value="Sudbury">Sudbury Hill</option>
+                <option key={7} value="Perivale">Perivale</option>
+                <option key={8} value="Hounslow">Hounslow West</option>
+                <option key={9} value="Hayes">Hayes</option>
+                <option key={10} value="Watfords">Watfords</option>
 
-                {store.map((shop) => (
-                  <option key={shop.StoreID} value={shop.StoreID}>
-                    {shop.StoreName}
-                  </option>
-                ))}
+
 
               </select>
               {/* <div className="small text-danger  pb-2   ">{errors.parentEntity?.message}</div> */}
@@ -125,13 +252,13 @@ function onChangeStore(e){
             <div className="col-2">
               <label className="form-label">Product Id </label>
               <input
-                                        type="text"
-                                        className="form-control"
-                                        id="productId"
-                                        placeholder="Product Id"
-                                        {...register('productId')}
-                                    />
-              
+                type="text"
+                className="form-control"
+                id="productId"
+                placeholder="Product Id"
+                {...register('productId')}
+              />
+
               {/* <div className="small text-danger  pb-2   ">{errors.parentEntity?.message}</div> */}
             </div>
 
@@ -142,14 +269,14 @@ function onChangeStore(e){
                 name="store"
                 id="store"
                 className="form-select"
-              //   {...register('parentEntity')}
-              onChange={(e) => setSelectedStote(e.currentTarget.value)} 
+                //   {...register('parentEntity')}
+                onChange={(e) => onChangeBarcode(e.currentTarget.value)}
               >
-                <option key={0} value="">Select</option>
+                <option key={0} value="">ALL</option>
 
-                {store.map((shop) => (
-                  <option key={shop.StoreID} value={shop.StoreID}>
-                    {shop.StoreName}
+                {barcodeList.map((code) => (
+                  <option key={code.barcode} value={code.barcode}>
+                    {code.barcode}
                   </option>
                 ))}
 
@@ -164,22 +291,22 @@ function onChangeStore(e){
                 name="store"
                 id="store"
                 className="form-select"
-              //   {...register('parentEntity')}
-              onChange={(e) => setSelectedStote(e.currentTarget.value)} 
+                //   {...register('parentEntity')}
+                onChange={(e) => setSelectedModule(e.currentTarget.value)}
               >
-               
-                    <option value="">--Select All--</option>
-                    <option value="IM">Items</option>
-                    <option value="D">Delivery</option>
-                    <option value="ST">Stock Take</option>
-                    <option value="SA">Stock Adjustment</option>
-                    <option value="S">Sales</option>
-                    <option value="PR">Purchase Return</option>
-                </select>
-               
-                
 
-             
+                <option value="">--Select All--</option>
+                <option value="IM">Items</option>
+                <option value="D">Delivery</option>
+                <option value="ST">Stock Take</option>
+                <option value="SA">Stock Adjustment</option>
+                <option value="S">Sales</option>
+                <option value="PR">Purchase Return</option>
+              </select>
+
+
+
+
               {/* <div className="small text-danger  pb-2   ">{errors.parentEntity?.message}</div> */}
             </div>
 
@@ -198,7 +325,7 @@ function onChangeStore(e){
               {/* <div className="small text-danger  pb-2   ">{errors.parentEntity?.message}</div> */}
             </div>
 
-        
+
 
 
 
@@ -206,20 +333,7 @@ function onChangeStore(e){
 
           </div>
 
-          <div className='row'>
-          <div className="col-8">
-              <label className="form-label">Upload Excel file </label>
-              <div className="input-group">
-                {/* <input type="file" className="form-control" onChange={(e) => fileHandler(e)} /> */}
 
-              </div>
-            </div>
-            <div className="col-1">
-
-              {/* <button className="btn btn-primary upload-btn" type="button" onClick={handleClick}>Upload</button> */}
-
-            </div>
-          </div>
 
 
 
@@ -230,8 +344,16 @@ function onChangeStore(e){
 
           <div className="row mt-4">
 
-            <OutTable className="mb-3" data={row} columns={col} tableClassName="ExcelTable2007" tableHeaderRowclassName="heading" />
-
+            {/* <OutTable className="mb-3" data={row} columns={col} tableClassName="ExcelTable2007" tableHeaderRowclassName="heading" /> */}
+            <div
+              className="ag-theme-quartz" // applying the Data Grid theme
+              style={{ height: 500 }} // the Data Grid will fill the size of the parent container
+            >
+              <AgGridReact
+                rowData={rowData}
+                columnDefs={colDefs}
+              />
+            </div>
 
 
           </div>
@@ -242,7 +364,7 @@ function onChangeStore(e){
 
         </div>
       </div>
-     
+
     </>
   )
 }

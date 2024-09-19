@@ -33,11 +33,11 @@ export default function promotion() {
     const [file, setFile] = useState([]);
     const [fileName, setFileName] = useState([]);
 
- 
+
     const [editModalvisible, setEditModalvisible] = useState(false);
-    const [barcodeShow, setBarcodeShow] = useState(false);
+    const [barcodeShow, setBarcodeShow] = useState(true);
     const [buttonSpinner, setButtonSpinner] = useState(false);
-    const  imageHash=  Date.now()
+    const imageHash = Date.now()
     const fileInput = useRef()
 
     const baseURL = "http://localhost:8800/image/"
@@ -86,7 +86,7 @@ export default function promotion() {
                             alt="avatar"
                             width={100}
                             height={100}
-                            src={baseURL + renderedCellValue + ".webp?"+imageHash}
+                            src={baseURL + renderedCellValue + ".webp?" + imageHash}
                             loading="lazy"
                             style={{ borderRadius: '50%' }}
                         />
@@ -237,14 +237,14 @@ export default function promotion() {
         renderRowActions: ({ row, table }) => (
 
             <Box>
-           
-          
-            
-            {/* <label htmlFor="upload" className="btn btn-primary" tabIndex="0">Upload File</label> */}
-            <input type="file" className="form-control btn btn-primary" id="upload" onChange= {(event) =>uploadImage(row.original.id, event)} />
-            
 
-          </Box>
+
+
+                {/* <label htmlFor="upload" className="btn btn-primary" tabIndex="0">Upload File</label> */}
+                <input type="file" className="form-control btn btn-primary" id="upload" onChange={(event) => uploadImage(row.original.id, event)} />
+
+
+            </Box>
 
         ),
 
@@ -383,7 +383,10 @@ export default function promotion() {
                                                     <>
                                                         <div>
                                                             <span style={{ position: 'absolute', color: 'black', fontSize: '74px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-350px', marginLeft: '180px' }}>£</span>
-                                                            <span style={{ position: 'absolute', color: 'black', fontSize: '118px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-309px', marginLeft: '231px' }}><span>{Number(obj[5]).toFixed(2)}</span></span>
+
+
+                                                            {(obj[5].toFixed(2).toString().length <= 4) &&<span style={{ position: 'absolute', color: 'black', fontSize: '118px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-309px', marginLeft: '231px' }}><span>{Number(obj[5]).toFixed(2)}</span></span>}
+                                                            {(obj[5].toFixed(2).toString().length > 4) &&<span style={{ position: 'absolute', color: 'black', fontSize: '93px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-309px', marginLeft: '231px' }}><span>{Number(obj[5]).toFixed(2)}</span></span>}
 
                                                         </div>
                                                         <div className="container" style={{ marginTop: '100px' }}>
@@ -457,7 +460,7 @@ export default function promotion() {
 
                                                 {((obj[4].toString().length != 0) && (obj[4].toString().length <= 33)) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '42px' }}>{obj[4]}</div>}
                                                 {((obj[4].toString().length > 33) && (obj[4].toString().length < 42)) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '35px' }}>{obj[4]}</div>}
-                                                {(obj[4].toString().length > 42) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '30px' }}>{obj[4]}</div>}
+                                                {(obj[4].toString().length >= 42) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '28px' }}>{obj[4]}</div>}
 
 
 
