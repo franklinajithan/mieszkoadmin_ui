@@ -26,6 +26,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 export default function promotion() {
+    // =TEXT(D1,"0.00")
     const [dataItem, setData] = useState([]);
     const [selectedValue, setSelectedValue] = useState([]);
     const [row, setRow] = useState([]);
@@ -321,7 +322,14 @@ export default function promotion() {
 
                     return (
 
-                        <div style={{ border: '7px solid #c23b32', height: '850px', width: '1185px', backgroundColor: 'white' }} className="template-box mb-1 mt-1" key={index}>
+                        <div style={{ border: '7px solid #c23b32',
+                            height: '850px',
+                            width: '1185px',
+                            backgroundColor: 'white',
+                            borderRadius: '15px',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                            overflow: 'hidden',
+                            margin: '10px auto', }} className="template-box mb-1 mt-1" key={index}>
 
                             <div>
                                 <div className='row'>
@@ -385,8 +393,8 @@ export default function promotion() {
                                                             <span style={{ position: 'absolute', color: 'black', fontSize: '74px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-350px', marginLeft: '180px' }}>£</span>
 
 
-                                                            {(obj[5].toFixed(2).toString().length <= 4) &&<span style={{ position: 'absolute', color: 'black', fontSize: '118px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-309px', marginLeft: '231px' }}><span>{Number(obj[5]).toFixed(2)}</span></span>}
-                                                            {(obj[5].toFixed(2).toString().length > 4) &&<span style={{ position: 'absolute', color: 'black', fontSize: '93px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-309px', marginLeft: '231px' }}><span>{Number(obj[5]).toFixed(2)}</span></span>}
+                                                            {(obj[5]?.toFixed(2).toString().length <= 4) &&<span style={{ position: 'absolute', color: 'black', fontSize: '118px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-309px', marginLeft: '231px' }}><span>{Number(obj[5])?.toFixed(2)}</span></span>}
+                                                            {(obj[5]?.toFixed(2).toString().length > 4) &&<span style={{ position: 'absolute', color: 'black', fontSize: '93px', fontWeight: 'bold', fontFamily: 'revert-layer', marginTop: '-309px', marginLeft: '231px' }}><span>{Number(obj[5])?.toFixed(2)}</span></span>}
 
                                                         </div>
                                                         <div className="container" style={{ marginTop: '100px' }}>
@@ -403,7 +411,7 @@ export default function promotion() {
                                                                 <div style={{ fontSize: '70px', marginTop: '-117px', marginLeft: '288px', fontWeight: 'bold', textAlign: 'center' }}>FOR</div>
                                                                 <div style={{ fontSize: '88px', marginTop: '-23px', marginLeft: '182px', fontWeight: 'bold', textAlign: 'center' }}>{(obj[4].split(' '))[2]}</div> */}
 
-                                                            <div style={{ fontSize: '51px', marginTop: '-288px', marginLeft: '163px', fontWeight: 'bold', textAlign: 'center' }}>{obj[5]}</div>
+                                                            <div style={{ fontSize: '55px', marginTop: '-288px', marginLeft: '163px', fontWeight: 'bold', textAlign: 'center' }}>{obj[5]}</div>
 
                                                         </div>
                                                         <div className="container" style={{ marginTop: '50px' }}>
@@ -417,9 +425,8 @@ export default function promotion() {
                                                     <div style={{ position: 'relative', marginTop: '-250px', color: 'white', fontSize: '46px', fontWeight: 'bold', marginLeft: '48%' }}>{obj[2]}</div>
                                                 }
                                                 {(obj[5]).toString().toLowerCase().includes("for") &&
-                                                    <div style={{ position: 'relative', marginTop: '-250px', color: 'white', fontSize: '46px', fontWeight: 'bold', marginLeft: '48%' }}></div>
+                                                  <div style={{ position: 'relative', marginTop: '-193px', color: 'white', fontSize: '37px', fontWeight: 'bold', marginLeft: '35%' }}>{obj[2]}</div>
                                                 }
-
 
 
                                             </div>
@@ -445,7 +452,7 @@ export default function promotion() {
                                             <div id="flex">
 
                                                 {barcodeShow && <div style={{ float: 'left' }}>
-                                                    <Barcode marginTop={0} float={'left'} marginLeft={0} marginBottom={0} marginRight={0} fontSize={20} value={obj[0].toString()} format="CODE128" width={2} height={40} />
+                                                    <Barcode marginTop={0} float={'left'} marginLeft={0} marginBottom={0} marginRight={0} fontSize={20} value={obj[0].toString()} format="CODE128" width={2} height={50} />
                                                 </div>}
                                             </div>
 
@@ -458,8 +465,8 @@ export default function promotion() {
 
 
 
-                                                {((obj[4].toString().length != 0) && (obj[4].toString().length <= 33)) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '42px' }}>{obj[4]}</div>}
-                                                {((obj[4].toString().length > 33) && (obj[4].toString().length < 42)) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '35px' }}>{obj[4]}</div>}
+                                                {((obj[4].toString().length != 0) && (obj[4].toString().length <= 33)) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '40px' }}>{obj[4]}</div>}
+                                                {((obj[4].toString().length > 33) && (obj[4].toString().length < 42)) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '30px' }}>{obj[4]}</div>}
                                                 {(obj[4].toString().length >= 42) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '28px' }}>{obj[4]}</div>}
 
 
