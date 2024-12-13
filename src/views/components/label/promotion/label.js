@@ -43,32 +43,11 @@ export default function promotion() {
 
     const baseURL = "http://localhost:8800/image/"
 
-    // const logo = require('../../assets/images/logo.png');
-    // const circle = require('../../assets/images/yellow-circle.png');
+  
 
     const columns = useMemo(
         () => [
-            // {
-            //     accessorKey: 'id',
-            //     header: 'Upload Image',
-            //     size: 10,
-            //     Cell: ({cell  }) => (
-            //         <Box
-            //             sx={{
-            //                 display: 'flex',
-            //                 alignItems: 'center',
-            //                 gap: '1rem',
-            //             }}
-            //         >
-
-            //             <label htmlFor="files" className="btn"><CIcon icon={cilCloudUpload} /></label>
-            //             <input id="files" type="file" ref={fileInput} style={{ visibility: "hidden" }} className='form-control' onChange={(e) => uploadImage(cell.getValue())} />
-
-
-            //         </Box>
-            //     ),
-
-            // },
+        
             {
                 accessorKey: 'imageURL',
                 header: 'Image',
@@ -169,7 +148,7 @@ export default function promotion() {
                 console.log(err);
             }
             else {
-                //setCol(resp.cols);
+      
                 resp.rows.forEach(element => { element.id = element[0], element.imageURL = element[0] });
                 let data = resp.rows.filter(x => x.length != 0);
                 setData(data)
@@ -182,7 +161,7 @@ export default function promotion() {
 
     function onClickEdit(row) {
         setEditModalvisible(true);
-        // setSelectRow(row.original)
+ 
     }
 
     const table = useMaterialReactTable({
@@ -203,34 +182,13 @@ export default function promotion() {
             showGlobalFilter: true,
             pagination: { pageSize: 10 },
             density: 'compact',
-            // showColumnFilters: true,
+ 
             columnPinning: {
                 left: ['mrt-row-actions'],
-                //right: ['mrt-row-actions'],
+              
             },
         },
-        // paginationDisplayMode: 'pages',
-        // positionToolbarAlertBanner: 'bottom',
-        // muiSearchTextFieldProps: {
-        //     size: 'small',
-        //     variant: 'outlined',
-        // },
-        // muiTablePaperProps: {
-        //     elevation: 0,
-        //     sx: {
-        //         borderRadius: '0',
-        //     },
-        // },
-
-        // muiPaginationProps: {
-        //     color: 'secondary',
-        //     rowsPerPageOptions: [10, 20, 30],
-        //     shape: 'rounded',
-        //     variant: 'outlined',
-        // },
-        // createDisplayMode: 'modal',
-        // editDisplayMode: 'modal',
-        // enableEditing: true,
+ 
         getRowId: (row) => row.id,
 
 
@@ -240,8 +198,6 @@ export default function promotion() {
             <Box>
 
 
-
-                {/* <label htmlFor="upload" className="btn btn-primary" tabIndex="0">Upload File</label> */}
                 <input type="file" className="form-control btn btn-primary" id="upload" onChange={(event) => uploadImage(row.original.id, event)} />
 
 
@@ -257,8 +213,6 @@ export default function promotion() {
 
     const PrintDiv = (id) => {
 
-        // var data = document.getElementById('textcanves')   ;
-        // var test = data.innerHTML;
 
         if (document.getElementById("textcanves") != null) {
             var data = document.getElementById("textcanves").innerHTML;
@@ -340,7 +294,7 @@ export default function promotion() {
                                         </div>
                                         <div className="col-md-5 p-0">
 
-                                            <div style={{ paddingLeft: '8px', color: '#c23b32', fontSize: '39px', fontFamily: 'fantasy', marginTop: '16px', fontWeight: 'bold' }} >POLSKIE SUPERMARKETY</div>
+                                            <div style={{ paddingLeft: '8px', color: '#c23b32', fontSize: '42px', fontFamily: 'fantasy', marginTop: '16px', fontWeight: 'bold' }} >POLSKIE SUPERMARKETY</div>
                                             <div style={{ fontFamily: 'Minion Pro', marginTop: '-30px', paddingTop: '-49px', color: '#c23b32', fontSize: '88px', fontWeight: 'bold' }}>MIESZKO</div>
                                         </div>
                                         <div className="col-md-5 p-0">
@@ -362,21 +316,14 @@ export default function promotion() {
 
                                         <div className="col-md-6">
 
-                                            {/* <div style={{ position: 'relative', height: '630px', float: 'left', paddingLeft: '130px' }}>
-                                                    <img style={{ marginTop: '38px', padding: '20px', width: 'auto', height: 'auto', maxHeight: '100%', maxWidth: '100%' }} src={image} />
-                                                </div> */}
+                                     
 
                                             <div style={{ height: '545px', width: '640px', marginLeft: '10px' }}>
                                                 < img style={{ height: '100%', width: '100%', objectFit: 'contain' }} src={image} />
 
                                             </div>
 
-                                            {/* <div className='row'>
-                                                    <div style={{ marginTop: '-150px' }}>
-                                                        <span style={{ marginLeft: '13px', fontSize: '80px', fontWeight: 'bold', fontFamily: 'auto', color: '#c23b32' }}>ONLY AT</span>
-                                                        <img style={{ marginTop: '-33px', width: '189px', marginLeft: '-6px' }} src={logo} />
-                                                    </div>
-                                                </div> */}
+                                         
 
                                         </div>
                                         <div className="col-md-6">
@@ -407,10 +354,7 @@ export default function promotion() {
 
                                                     <>
                                                         <div style={{ position: 'absolute', color: 'black' }}>
-                                                            {/* <div style={{ fontSize: '108px', marginTop: '-432px', marginLeft: '63px', fontWeight: 'bold', textAlign: 'center' }}>{(obj[4].split(' '))[0]}</div>
-                                                                <div style={{ fontSize: '70px', marginTop: '-117px', marginLeft: '288px', fontWeight: 'bold', textAlign: 'center' }}>FOR</div>
-                                                                <div style={{ fontSize: '88px', marginTop: '-23px', marginLeft: '182px', fontWeight: 'bold', textAlign: 'center' }}>{(obj[4].split(' '))[2]}</div> */}
-
+                                                        
                                                             <div style={{ fontSize: '55px', marginTop: '-288px', marginLeft: '163px', fontWeight: 'bold', textAlign: 'center' }}>{obj[5]}</div>
 
                                                         </div>
@@ -421,23 +365,26 @@ export default function promotion() {
                                                 }
 
 
-                                                {!(obj[5]).toString().toLowerCase().includes("for") &&
+                                                {(!(obj[5]).toString().toLowerCase().includes("for") && !(obj[2]).toString().toLowerCase().includes("kg")) &&
                                                     <div style={{ position: 'relative', marginTop: '-250px', color: 'white', fontSize: '46px', fontWeight: 'bold', marginLeft: '48%' }}>{obj[2]}</div>
                                                 }
-                                                {(obj[5]).toString().toLowerCase().includes("for") &&
-                                                  <div style={{ position: 'relative', marginTop: '-193px', color: 'white', fontSize: '37px', fontWeight: 'bold', marginLeft: '35%' }}>{obj[2]}</div>
+
+                                                {(!(obj[5]).toString().toLowerCase().includes("for") && (obj[2]).toString().toLowerCase().includes("kg")) &&
+                                                    <div style={{ position: 'relative', marginTop: '-250px', color: 'white', fontSize: '46px', fontWeight: 'bold', marginLeft: '54%' }}>{obj[2]}</div>
                                                 }
+                                               
+                                               {((obj[5]).toString().toLowerCase().includes("for") && !(obj[2]).toString().toLowerCase().includes("multi buy")) &&
+                                                  <div style={{ position: 'relative', marginTop: '-193px', color: 'white', fontSize: '37px', fontWeight: 'bold', marginLeft: '30%' }}>{obj[2]}</div>
+                                                }
+                                                {((obj[5]).toString().toLowerCase().includes("for") && (obj[2]).toString().toLowerCase().includes("multi buy")) &&
+                                                  <div style={{ position: 'relative', marginTop: '-193px', color: 'white', fontSize: '37px', fontWeight: 'bold', marginLeft: '40%' }}>{obj[2]}</div>
+                                                }
+
+                                                
 
 
                                             </div>
-                                            {/* <div className="container" style={{marginTop: '47px'}}>
-                                                    <div className='boxshadow' style={{ marginLeft: 'auto', marginRight: '87px', width: '395px' }}>
-                                                        <div style={{ border: '6px solid #c23b32', backgroundColor: 'Yellow' }}>
-                                                            <div style={{ paddingLeft: ' 21px', fontSize: '66px', fontWeight: 'bold', color: '#c23b32' }} >Save £ 0.99</div>
-
-                                                        </div>
-                                                    </div>
-                                                </div> */}
+                                    
 
 
 
@@ -468,34 +415,10 @@ export default function promotion() {
                                                 {((obj[4].toString().length != 0) && (obj[4].toString().length <= 33)) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '40px' }}>{obj[4]}</div>}
                                                 {((obj[4].toString().length > 33) && (obj[4].toString().length < 42)) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '30px' }}>{obj[4]}</div>}
                                                 {(obj[4].toString().length >= 42) && <div id="a" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', whiteSpace: 'nowrap', textAlign: 'right', fontSize: '28px' }}>{obj[4]}</div>}
-
-
-
-
-                                                {/* <div id="a" style={{ marginLeft: 'auto', marginRight: '0', color: '#rgb(139 54 49)', position: 'relative', float: 'right', right: '-20px', marginTop: '40px', fontSize: '42px', fontWeight: 'bold', whiteSpace: 'nowrap', fontFamily: 'system-ui', }}>{obj[3]}</div> */}
-                                                <div id="b" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', textAlign: 'right', marginTop: '8px', fontSize: '31px', }}>{obj[3]} {obj[3] != '' && "/"} {obj[1]}</div>
+ <div id="b" style={{ color: '#rgb(139 54 49)', fontWeight: 'bold', textAlign: 'right', marginTop: '8px', fontSize: '31px', }}>{obj[3]} {obj[3] != '' && "/"} {obj[1]}</div>
 
                                             </div>
-                                            {/* <div className="flex">
-                                                <div style={{ position: 'relative', float: 'right', height: '112px', width: '150px', marginTop: '70px', float: 'right', right: '-110px', }}>
-                                                    <Barcode marginTop={0} float={'right'} marginLeft={0} marginBottom={0} marginRight={0} fontSize='25' value={obj[0]} format="CODE128" width='2' height='55' />
-                                                </div>
-                                            </div> */}
-                                            {/* <span style={{  fontSize:'36px', position:'absolute',transform:'rotate(-51deg)',fontWeight:'bold'}}>HIT PRICE</span> */}
-                                            {/* 2 for 1 Pound offer */}
-                                            {/* <span style={{ position: 'absolute', marginTop: '57px', color: 'black', fontSize: '115px', fontWeight: 'bold', fontFamily: 'revert-layer', right: '410px' }}>2</span>
-<span style={{ position: 'absolute', marginTop: '108px', color: 'black', fontSize: '70px', fontWeight: 'bold', fontFamily: 'revert-layer', right: '274px' }}>FOR</span>
-<span style={{ position: 'absolute', marginTop: '57px', color: 'black', fontSize: '115px', fontWeight: 'bold', fontFamily: 'revert-layer', right: '135px' }}>£1</span> */}
 
-
-
-                                            {/* <span style={{ position: 'relative', color: 'black', fontSize: '74px', fontWeight: 'bold', fontFamily: 'revert-layer' }}>£</span>
-
-<span style={{ position: 'relative', color: 'black', fontSize: '127px', fontWeight: 'bold', fontFamily: 'revert-layer', }}>{Number(obj[4]).toFixed(2)}</span>
-<img style={{ position: 'relative', marginLeft: '12px', marginTop: '-26px', width: 'auto', height: 'auto', maxHeight: '100%', maxWidth: '100%' }} src={circle} />
-
-<div style={{ position: 'relative', marginTop: '-167px', color: 'white', fontSize: '46px', fontWeight: 'bold', right: '22%' }}>{obj[2]}</div>
-*/}
                                         </div>
 
 
@@ -514,7 +437,7 @@ export default function promotion() {
                     );
 
 
-                    // }
+            
 
 
                 })}
@@ -531,24 +454,7 @@ export default function promotion() {
 
     return (
         <>
-            {/* <div className='row'>
-                <div className="input-group mb-3">
-                    <label className="input-group-text" >Upload Image</label>
-                    <input type="file" className="form-control" id="inputGroupFile01" onChange={(e) => imageUpload(e)} />
-                </div>
-                <div className='col-md-4'><input type="file" className='form-control' onChange={(e) => fileHandler(e)} /></div>
-                <div className='col-md-2'><button className='btn btn-primary' onClick={() => PrintDiv()} >Load PDF
-                </button></div>
-                <div className='col-md-2'>  <button className="btn btn-primary " onClick={() => printiframe()}>Print
-                </button></div>
-            </div>
-
-
-
-
-             <OutTable className="mb-3" data={row} columns={col} tableClassName="ExcelTable2007" tableHeaderRowclassName="heading" /> 
-            <iframe id="theFrame" name="theFrame" className="mb-3"></iframe>
-            <div id='textcanves' className="mb-3"> <MyDocument></MyDocument></div> */}
+          
 
 
 
@@ -628,10 +534,7 @@ export default function promotion() {
                                     <div className='col-md-4'><input type="file" className='form-control' onChange={(e) => fileHandler(e)} /></div>
 
 
-                                    {/* <div className='col-md-2'><button type='button' className='btn btn-primary col-8' onClick={PrintDiv} >
-                                    {buttonSpinner && <CSpinner as="span" size="sm" variant="grow" aria-hidden="true" >
-                                        Loading...</CSpinner>} Print
-                                </button></div> */}
+                                    
 
 
                                     {showTable && <MaterialReactTable table={table} />}

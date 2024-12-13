@@ -26,6 +26,7 @@ export default function delicatessen() {
         let fileObj = event.target.files[0];
 
         ExcelRenderer(fileObj, (err, resp) => {
+            debugger;
             if (err) {
                 console.log(err);
             }
